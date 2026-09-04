@@ -1,0 +1,5 @@
+.logo-image{width:39px;height:39px;border-radius:13px;object-fit:contain;background:#fff}
+.spin{animation:spin .8s linear infinite}
+.gallery-main,.thumbnail{position:relative}
+.hero-uploaded-banner{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.24}
+@keyframes spin{to{transform:rotate(360deg)}}
