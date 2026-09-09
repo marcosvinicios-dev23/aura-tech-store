@@ -1,9 +1,11 @@
 export type ProductCondition = "Novo" | "Seminovo";
+export type ProductCategory = "Celular" | "Notebook" | "MacBook" | "Tablet" | "Acessório";
 
 export type Product = {
   id: string;
   company_id: string;
   slug: string;
+  category: ProductCategory;
   brand: string;
   model: string;
   storage: string;

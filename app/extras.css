@@ -2,4 +2,20 @@
 .spin{animation:spin .8s linear infinite}
 .gallery-main,.thumbnail{position:relative}
 .hero-uploaded-banner{position:absolute;inset:0;background-size:cover;background-position:center;opacity:.24}
+.settings-logo-preview{display:block;max-width:100%;height:100px;object-fit:contain;margin:0 auto 18px}
+.settings-banner-preview{display:block;width:100%;height:150px;object-fit:cover;border-radius:10px;margin-bottom:18px}
+.optimization-status{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--blue);font-weight:800;font-size:.85rem;margin:18px 0 0}
+.camera-modal{width:min(720px,100%);background:#fff;border-radius:20px;padding:20px}
+.camera-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:16px}
+.camera-header h3{margin:0;font-size:1.4rem}
+.camera-header p{margin:3px 0 0;color:var(--muted);font-size:.86rem}
+.camera-viewport{position:relative;overflow:hidden;background:#07172e;border-radius:14px;aspect-ratio:4/3;display:grid;place-items:center}
+.camera-viewport video{width:100%;height:100%;object-fit:cover}
+.camera-loading,.camera-error{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:10px;color:#fff;background:#07172e;text-align:center;padding:30px}
+.camera-error{flex-direction:column}
+.camera-error p{margin:0;max-width:420px}
+.camera-actions{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:18px}
+.camera-shutter{width:64px;height:64px;border-radius:50%;border:6px solid #d9e5f7;background:var(--blue);color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(23,107,255,.25)}
+.camera-shutter:disabled{opacity:.45}
+@media(max-width:760px){.camera-modal{padding:14px}.camera-header p{display:none}.camera-viewport{aspect-ratio:3/4}.camera-shutter{width:58px;height:58px}}
 @keyframes spin{to{transform:rotate(360deg)}}

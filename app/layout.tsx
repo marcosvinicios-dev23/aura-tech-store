@@ -9,10 +9,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: { default: "TechCell Assistência", template: "%s | TechCell Assistência" },
-  description: "Celulares novos e seminovos, assistência técnica especializada e atendimento rápido.",
+  description: "Celulares, MacBooks e notebooks novos ou seminovos, com assistência técnica especializada.",
   openGraph: {
     title: "TechCell Assistência",
-    description: "Seu próximo celular pode estar aqui.",
+    description: "Seu próximo aparelho pode estar aqui.",
     type: "website",
     locale: "pt_BR",
   },

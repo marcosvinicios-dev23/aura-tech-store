@@ -6,8 +6,8 @@ import { getCompany, getProducts } from "@/lib/repository";
 import { companyTheme } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Celulares",
-  description: "Pesquise celulares novos e seminovos por marca, preço, condição e armazenamento.",
+  title: "Produtos",
+  description: "Pesquise celulares, MacBooks e notebooks novos ou seminovos por categoria, marca e preço.",
 };
 
 export default async function CatalogPage() {

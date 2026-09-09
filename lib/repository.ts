@@ -1,9 +1,14 @@
 import "server-only";
 import { demoCompany, demoProducts } from "./demo-data";
 import { hasDatabase, supabaseRequest } from "./supabase";
-import type { Company, Product } from "./types";
+import type { Company, Product, ProductCategory } from "./types";
 
 const companySlug = "techcell-assistencia";
+
+function normalizeProduct(product: Product): Product {
+  const category = (product.category || "Celular") as ProductCategory;
+  return { ...product, category };
+}
 
 export async function getCompany(): Promise<Company> {
   if (!hasDatabase()) return demoCompany;
@@ -24,9 +29,10 @@ export async function getProducts(options: { admin?: boolean } = {}): Promise<Pr
   if (!hasDatabase()) return demoProducts;
   const company = await getCompany();
   const visibility = options.admin ? "" : "&hidden=eq.false&stock=gt.0";
-  return supabaseRequest<Product[]>(
+  const products = await supabaseRequest<Product[]>(
     `products?company_id=eq.${company.id}${visibility}&order=created_at.desc`,
   );
+  return products.map(normalizeProduct);
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {

@@ -16,12 +16,12 @@ export function SiteHeader({ company }: { company: Company }) {
         <Logo name={company.name} image={company.logo_url} />
         <nav className={`site-nav ${open ? "is-open" : ""}`} aria-label="Navegação principal">
           <Link href="/" onClick={() => setOpen(false)}>Início</Link>
-          <Link href="/celulares" onClick={() => setOpen(false)}>Celulares</Link>
+          <Link href="/celulares" onClick={() => setOpen(false)}>Produtos</Link>
           <Link href="/#assistencia" onClick={() => setOpen(false)}>Assistência técnica</Link>
           <a href={contact} target="_blank" rel="noreferrer" className="mobile-whatsapp"><MessageCircle size={18} /> WhatsApp</a>
         </nav>
         <div className="header-actions">
-          <Link href="/celulares" className="button button-soft">Ver celulares</Link>
+          <Link href="/celulares" className="button button-soft">Ver produtos</Link>
           <a href={contact} target="_blank" rel="noreferrer" className="button button-primary"><MessageCircle size={18} /> WhatsApp</a>
         </div>
         <button className="menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Fechar menu" : "Abrir menu"}>

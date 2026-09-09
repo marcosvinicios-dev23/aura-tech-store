@@ -13,7 +13,7 @@ export function ProductCard({ product }: { product: Product }) {
         <span className={`condition-badge ${product.condition === "Novo" ? "new" : ""}`}>{product.condition}</span>
       </Link>
       <div className="product-body">
-        <span className="product-brand">{product.brand}</span>
+        <span className="product-brand">{product.category} • {product.brand}</span>
         <h3><Link href={`/celulares/${product.slug}`}>{product.model}</Link></h3>
         <div className="product-specs"><span>{product.storage}</span><span>{product.color}</span></div>
         <strong className="product-price">{formatCurrency(product.price)}</strong>

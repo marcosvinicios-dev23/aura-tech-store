@@ -24,6 +24,7 @@ create table if not exists products (
   id uuid primary key default gen_random_uuid(),
   company_id uuid not null references companies(id) on delete cascade,
   slug text not null,
+  category text not null default 'Celular' check (category in ('Celular','Notebook','MacBook','Tablet','Acessório')),
   brand text not null,
   model text not null,
   storage text not null,
@@ -47,6 +48,8 @@ create index if not exists idx_products_company_status
   on products(company_id, hidden, stock);
 create index if not exists idx_products_company_brand
   on products(company_id, brand);
+create index if not exists idx_products_company_category
+  on products(company_id, category);
 
 alter table companies enable row level security;
 alter table products enable row level security;

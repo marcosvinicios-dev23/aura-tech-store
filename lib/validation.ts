@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const productSchema = z.object({
+  category: z.enum(["Celular", "Notebook", "MacBook", "Tablet", "Acessório"]).default("Celular"),
   brand: z.string().trim().min(2).max(40),
   model: z.string().trim().min(2).max(80),
   storage: z.string().trim().min(2).max(20),

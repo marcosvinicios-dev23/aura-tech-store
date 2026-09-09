@@ -47,3 +47,22 @@ export async function uploadToStorage(file: File, path: string) {
   if (!response.ok) throw new Error("Não foi possível enviar a imagem.");
   return `${cfg.url}/storage/v1/object/public/${bucket}/${path}`;
 }
+
+export async function deleteFromStorage(publicUrl: string) {
+  const cfg = config();
+  if (!cfg) return false;
+  const bucket = process.env.SUPABASE_STORAGE_BUCKET || "product-images";
+  const prefix = `${cfg.url}/storage/v1/object/public/${bucket}/`;
+  if (!publicUrl.startsWith(prefix)) return false;
+
+  const path = publicUrl.slice(prefix.length);
+  if (!path) return false;
+  const response = await fetch(`${cfg.url}/storage/v1/object/${bucket}/${path}`, {
+    method: "DELETE",
+    headers: {
+      apikey: cfg.key,
+      Authorization: `Bearer ${cfg.key}`,
+    },
+  });
+  return response.ok || response.status === 404;
+}

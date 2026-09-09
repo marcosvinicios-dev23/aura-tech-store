@@ -1,7 +1,8 @@
 "use client";
 
-import { ImagePlus, Loader2, Save } from "lucide-react";
+import { ImagePlus, Loader2, Save, Trash2 } from "lucide-react";
 import { useState } from "react";
+import { compressImage, formatFileSize } from "@/lib/image-compression";
 import type { Company } from "@/lib/types";
 
 export function SettingsForm({ company }: { company: Company }) {
@@ -14,14 +15,31 @@ export function SettingsForm({ company }: { company: Company }) {
   async function upload(file: File | undefined, type: "logo" | "banner") {
     if (!file) return;
     setLoading(true);
-    const form = new FormData();
-    form.append("files", file);
-    const response = await fetch("/api/admin/upload", { method: "POST", body: form });
-    const data = await response.json();
-    setLoading(false);
-    if (!response.ok) return setError(data.error);
-    if (type === "logo") setLogo(data.urls[0]);
-    else setBanner(data.urls[0]);
+    setError("");
+    try {
+      const optimized = await compressImage(file);
+      const form = new FormData();
+      form.append("files", optimized);
+      const response = await fetch("/api/admin/upload", { method: "POST", body: form });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error);
+      if (type === "logo") setLogo(data.urls[0]);
+      else setBanner(data.urls[0]);
+      setToast(`Imagem otimizada: ${formatFileSize(file.size)} → ${formatFileSize(optimized.size)}.`);
+      setTimeout(() => setToast(""), 3000);
+    } catch (uploadError) {
+      setError(uploadError instanceof Error ? uploadError.message : "Não foi possível enviar a imagem.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function removeImage(type: "logo" | "banner") {
+    const label = type === "logo" ? "logo" : "banner";
+    if (!window.confirm(`Remover ${label}? A alteração será aplicada quando você salvar.`)) return;
+    if (type === "logo") setLogo("");
+    else setBanner("");
+    setToast(`${type === "logo" ? "Logo removida" : "Banner removido"}. Clique em Salvar configurações.`);
   }
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -29,16 +47,21 @@ export function SettingsForm({ company }: { company: Company }) {
     setLoading(true);
     setError("");
     const data = Object.fromEntries(new FormData(event.currentTarget));
-    const response = await fetch("/api/admin/settings", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...data, logo_url: logo || null, banner_url: banner || null }),
-    });
-    const result = await response.json();
-    setLoading(false);
-    if (!response.ok) return setError(result.error);
-    setToast("Configurações salvas.");
-    setTimeout(() => setToast(""), 2500);
+    try {
+      const response = await fetch("/api/admin/settings", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...data, logo_url: logo || null, banner_url: banner || null }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      setToast("Configurações salvas.");
+      setTimeout(() => setToast(""), 2500);
+    } catch (saveError) {
+      setError(saveError instanceof Error ? saveError.message : "Não foi possível salvar.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -58,13 +81,13 @@ export function SettingsForm({ company }: { company: Company }) {
         <section className="form-section">
           <h2>Personalização</h2>
           <div className="color-row"><label className="field">Cor principal<input type="color" name="primary_color" defaultValue={company.primary_color} /></label><label className="field">Cor secundária<input type="color" name="secondary_color" defaultValue={company.secondary_color} /></label></div>
-          <div className="field"><span>Logo</span><div className="upload-zone">{logo ? <img src={logo} alt="Logo atual" style={{ maxWidth: "100%", height: 100, objectFit: "contain" }} /> : <p>Nenhuma imagem. A logo textual continuará ativa.</p>}<label className="button button-soft"><ImagePlus size={17} /> Escolher logo<input hidden type="file" accept="image/*" onChange={(e) => upload(e.target.files?.[0], "logo")} /></label></div></div>
-          <div className="field"><span>Banner principal</span><div className="upload-zone">{banner && <img src={banner} alt="Banner atual" style={{ width: "100%", height: 150, objectFit: "cover", borderRadius: 10 }} />}<label className="button button-soft"><ImagePlus size={17} /> Escolher banner<input hidden type="file" accept="image/*" onChange={(e) => upload(e.target.files?.[0], "banner")} /></label></div></div>
+          <div className="field"><span>Logo</span><div className="upload-zone">{logo ? <img src={logo} alt="Logo atual" className="settings-logo-preview" /> : <p>Nenhuma imagem. A logo textual continuará ativa.</p>}<div className="upload-actions"><label className="button button-soft"><ImagePlus size={17} /> {logo ? "Trocar logo" : "Escolher logo"}<input hidden type="file" accept="image/*" onChange={(e) => { upload(e.target.files?.[0], "logo"); e.target.value = ""; }} /></label>{logo && <button type="button" className="button button-danger" onClick={() => removeImage("logo")}><Trash2 size={17} /> Remover logo</button>}</div></div></div>
+          <div className="field"><span>Banner principal</span><div className="upload-zone">{banner ? <img src={banner} alt="Banner atual" className="settings-banner-preview" /> : <p>Nenhum banner personalizado. O visual padrão continuará ativo.</p>}<div className="upload-actions"><label className="button button-soft"><ImagePlus size={17} /> {banner ? "Trocar banner" : "Escolher banner"}<input hidden type="file" accept="image/*" onChange={(e) => { upload(e.target.files?.[0], "banner"); e.target.value = ""; }} /></label>{banner && <button type="button" className="button button-danger" onClick={() => removeImage("banner")}><Trash2 size={17} /> Remover banner</button>}</div></div></div>
         </section>
-        {error && <p className="form-error">{error}</p>}
-        <div className="form-submit"><button className="button button-primary button-lg" disabled={loading}>{loading ? <Loader2 className="spin" /> : <Save />} Salvar configurações</button></div>
+        {error && <p className="form-error" role="alert">{error}</p>}
+        <div className="form-submit"><button className="button button-primary button-lg" disabled={loading}>{loading ? <Loader2 className="spin" /> : <Save />} {loading ? "Processando..." : "Salvar configurações"}</button></div>
       </form>
-      {toast && <div className="toast">{toast}</div>}
+      {toast && <div className="toast" role="status">{toast}</div>}
     </>
   );
 }

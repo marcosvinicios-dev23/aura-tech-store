@@ -28,9 +28,9 @@ export default async function HomePage() {
           <div className="container hero-grid">
             <div className="hero-copy">
               <span className="eyebrow">Tecnologia com procedência</span>
-              <h1>Seu próximo celular pode estar aqui.</h1>
-              <p>Celulares novos e seminovos, assistência técnica especializada e atendimento rápido.</p>
-              <div className="hero-buttons"><Link href="/celulares" className="button button-primary button-lg">Ver celulares <ArrowRight /></Link><a href={wa} target="_blank" rel="noreferrer" className="button button-outline button-lg">Falar no WhatsApp</a></div>
+              <h1>Seu próximo aparelho pode estar aqui.</h1>
+              <p>Celulares, MacBooks e notebooks novos ou seminovos, com atendimento rápido e assistência especializada.</p>
+              <div className="hero-buttons"><Link href="/celulares" className="button button-primary button-lg">Ver produtos <ArrowRight /></Link><a href={wa} target="_blank" rel="noreferrer" className="button button-outline button-lg">Falar no WhatsApp</a></div>
               <div className="hero-trust"><span><ShieldCheck /> Garantia e procedência</span><span><SearchCheck /> Avaliação transparente</span></div>
             </div>
             <div className="hero-visual">
@@ -42,7 +42,7 @@ export default async function HomePage() {
         </section>
 
         <section className="section container">
-          <div className="section-heading"><div><span className="eyebrow dark">Escolhas em destaque</span><h2>Celulares selecionados</h2><p>Veja algumas opções cadastradas nesta demonstração.</p></div><Link href="/celulares" className="text-link">Ver catálogo completo <ArrowRight /></Link></div>
+          <div className="section-heading"><div><span className="eyebrow dark">Escolhas em destaque</span><h2>Produtos selecionados</h2><p>Veja algumas opções cadastradas nesta demonstração.</p></div><Link href="/celulares" className="text-link">Ver catálogo completo <ArrowRight /></Link></div>
           <div className="products-grid">{featured.map((product) => <ProductCard key={product.id} product={product} />)}</div>
           <p className="demo-note">Catálogo demonstrativo. Consulte a empresa para confirmar disponibilidade.</p>
         </section>
@@ -52,7 +52,7 @@ export default async function HomePage() {
           <div className="services-grid">{services.map(([Icon,title,text]) => <article className="service-card" key={title}><span><Icon /></span><h3>{title}</h3><p>{text}</p></article>)}</div></div>
         </section>
 
-        <section className="section container"><div className="main-cta"><div><span className="eyebrow">Atendimento humano</span><h2>Encontrou o celular que procurava?</h2><p>Fale com nossa equipe pelo WhatsApp.</p></div><a href={wa} target="_blank" rel="noreferrer" className="button button-white button-lg">Conversar no WhatsApp <ArrowRight /></a></div></section>
+        <section className="section container"><div className="main-cta"><div><span className="eyebrow">Atendimento humano</span><h2>Encontrou o aparelho que procurava?</h2><p>Fale com nossa equipe pelo WhatsApp.</p></div><a href={wa} target="_blank" rel="noreferrer" className="button button-white button-lg">Conversar no WhatsApp <ArrowRight /></a></div></section>
       </main>
       <SiteFooter company={company} />
     </div>
