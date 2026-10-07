@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, BatteryCharging, MonitorSmartphone, SearchCheck, ShieldCheck, Smartphone, Wrench } from "lucide-react";
 import { getCompany, getProducts } from "@/lib/repository";
 import { companyTheme, whatsappUrl } from "@/lib/utils";
@@ -33,7 +34,7 @@ export default async function HomePage() {
               <div className="hero-trust"><span><ShieldCheck /> Garantia e procedência</span><span><SearchCheck /> Avaliação transparente</span></div>
             </div>
             <div className="hero-visual">
-              <div className="hero-device"><div className="device-camera"><i/><i/><i/></div><div className="device-glow"/></div>
+              <Image className="hero-phones" src="/images/iphone-fan.webp" alt="Três iPhones em prata e grafite organizados em leque" width={1024} height={1024} priority sizes="(max-width: 760px) 90vw, 540px" />
               <div className="floating-card card-top"><span>Atendimento rápido</span><b>Direto no WhatsApp</b></div>
               <div className="floating-card card-bottom"><span>Aparelhos revisados</span><b>Novo ou seminovo</b></div>
             </div>

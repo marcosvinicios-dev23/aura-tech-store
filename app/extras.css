@@ -19,3 +19,5 @@
 .camera-shutter:disabled{opacity:.45}
 @media(max-width:760px){.camera-modal{padding:14px}.camera-header p{display:none}.camera-viewport{aspect-ratio:3/4}.camera-shutter{width:58px;height:58px}}
 @keyframes spin{to{transform:rotate(360deg)}}
+
+.hero-visual{background:none;border-radius:0}.hero-phones{width:115%;max-width:580px;height:auto;max-height:520px;object-fit:contain;filter:drop-shadow(0 22px 25px rgba(0,0,0,.12))}.hero-visual .floating-card{z-index:2}.hero-visual .card-top{top:15px;right:-5px}.hero-visual .card-bottom{bottom:0;left:-5px}@media(max-width:760px){.hero-phones{width:100%;max-height:350px}.hero-visual .card-top{top:0;right:0}.hero-visual .card-bottom{bottom:0;left:0}}
