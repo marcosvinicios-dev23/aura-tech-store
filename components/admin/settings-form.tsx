@@ -34,7 +34,7 @@ export function SettingsForm({ company }: { company: Company }) {
   return (
     <>
       <header className="admin-topbar"><div><h1>Configurações</h1><p>Atualize os dados e contatos da empresa.</p></div></header>
-      <form className="settings-grid" onSubmit={submit}>
+      <form className="settings-grid" style={{ gridTemplateColumns: "1fr" }} onSubmit={submit}>
         <section className="form-section">
           <h2>Dados da empresa</h2>
           <label className="field">Nome da empresa<input name="name" defaultValue={company.name} required /></label>
