@@ -23,12 +23,11 @@ export default async function HomePage() {
       <SiteHeader company={company} />
       <main>
         <section className="home-hero">
-          {company.banner_url && <div className="hero-uploaded-banner" style={{ backgroundImage: `url("${company.banner_url}")` }} />}
           <div className="hero-orb one" /><div className="hero-orb two" />
           <div className="container hero-grid">
             <div className="hero-copy">
-              <span className="eyebrow">Tecnologia com procedência</span>
-              <h1>Seu próximo aparelho pode estar aqui.</h1>
+              <span className="eyebrow">Aparelhos e assistência técnica</span>
+              <h1>Tecnologia para<br />o seu dia a dia.<br /><span>Cuidado de verdade.</span></h1>
               <p>Celulares, MacBooks e notebooks novos ou seminovos, com atendimento rápido e assistência especializada.</p>
               <div className="hero-buttons"><Link href="/celulares" className="button button-primary button-lg">Ver produtos <ArrowRight /></Link><a href={wa} target="_blank" rel="noreferrer" className="button button-outline button-lg">Falar no WhatsApp</a></div>
               <div className="hero-trust"><span><ShieldCheck /> Garantia e procedência</span><span><SearchCheck /> Avaliação transparente</span></div>
@@ -48,7 +47,7 @@ export default async function HomePage() {
         </section>
 
         <section className="services-section" id="assistencia">
-          <div className="container"><div className="section-heading light"><div><span className="eyebrow">Assistência especializada</span><h2>Cuidado técnico do diagnóstico à entrega.</h2><p>Serviços essenciais apresentados de forma simples e confiável.</p></div></div>
+          <div className="container"><div className="section-heading light"><div><span className="eyebrow">Assistência especializada</span><h2>Cuidado técnico do diagnóstico à entrega.</h2><p>Da troca de tela à manutenção do notebook, encontre o serviço que seu aparelho precisa.</p></div></div>
           <div className="services-grid">{services.map(([Icon,title,text]) => <article className="service-card" key={title}><span><Icon /></span><h3>{title}</h3><p>{text}</p></article>)}</div></div>
         </section>
 
