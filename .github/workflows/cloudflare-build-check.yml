@@ -18,5 +18,11 @@ jobs:
           node-version: '22'
       - name: Install preview dependencies without changing lockfile
         run: npm install --package-lock=false --no-audit --no-fund
+      - name: Check Next.js production build
+        run: npm run build
       - name: Build Cloudflare Worker
         run: npm run cf:build
+      - name: Verify Worker and assets exist
+        run: |
+          test -f .open-next/worker.js
+          test -d .open-next/assets
