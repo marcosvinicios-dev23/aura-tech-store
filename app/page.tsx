@@ -10,7 +10,7 @@ import { SiteHeader } from "@/components/site-header";
 export default async function HomePage() {
   const [company, products] = await Promise.all([getCompany(), getProducts()]);
   const featured = products.filter((p) => p.featured).slice(0, 4);
-  const wa = whatsappUrl(company.whatsapp, "Olá! Vim pelo site e gostaria de falar com a equipe da TechCell.");
+  const wa = whatsappUrl(company.whatsapp, `Olá! Vim pelo site da ${company.name} e gostaria de atendimento.`);
   const services = [
     [MonitorSmartphone, "Troca de tela", "Vidro, touch ou imagem danificada."],
     [BatteryCharging, "Troca de bateria", "Mais autonomia e segurança para seu aparelho."],
@@ -42,9 +42,8 @@ export default async function HomePage() {
         </section>
 
         <section className="section container">
-          <div className="section-heading"><div><span className="eyebrow dark">Escolhas em destaque</span><h2>Produtos selecionados</h2><p>Veja algumas opções cadastradas nesta demonstração.</p></div><Link href="/celulares" className="text-link">Ver catálogo completo <ArrowRight /></Link></div>
+          <div className="section-heading"><div><span className="eyebrow dark">Escolhas em destaque</span><h2>Produtos selecionados</h2><p>Confira os produtos disponíveis em nossa loja.</p></div><Link href="/celulares" className="text-link">Ver catálogo completo <ArrowRight /></Link></div>
           <div className="products-grid">{featured.map((product) => <ProductCard key={product.id} product={product} />)}</div>
-          <p className="demo-note">Catálogo demonstrativo. Consulte a empresa para confirmar disponibilidade.</p>
         </section>
 
         <section className="services-section" id="assistencia">
