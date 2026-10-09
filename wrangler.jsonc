@@ -1,0 +1,12 @@
+{
+  // Configuração experimental: usar somente na branch cloudflare-migracao.
+  // Requer build com adaptador OpenNext para Cloudflare Workers.
+  "name": "aura-tech-store-preview",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-09",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  }
+}
