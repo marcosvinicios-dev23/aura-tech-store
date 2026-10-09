@@ -5,14 +5,16 @@ import "./extras.css";
 
 const manrope = Manrope({ subsets: ["latin"], display: "swap" });
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const siteName = process.env.SITE_NAME || "Loja de Tecnologia";
+const siteDescription = process.env.SITE_DESCRIPTION || "Confira nossos produtos e fale com nossa equipe.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: "TechCell Assistência", template: "%s | TechCell Assistência" },
-  description: "Celulares, MacBooks e notebooks novos ou seminovos, com assistência técnica especializada.",
+  title: { default: siteName, template: `%s | ${siteName}` },
+  description: siteDescription,
   openGraph: {
-    title: "TechCell Assistência",
-    description: "Seu próximo aparelho pode estar aqui.",
+    title: siteName,
+    description: siteDescription,
     type: "website",
     locale: "pt_BR",
   },
