@@ -3,7 +3,7 @@ import { demoCompany, demoProducts } from "./demo-data";
 import { hasDatabase, supabaseRequest } from "./supabase";
 import type { Company, Product, ProductCategory } from "./types";
 
-const companySlug = "techcell-assistencia";
+const companySlug = process.env.COMPANY_SLUG?.trim() || "techcell-assistencia";
 
 function normalizeProduct(product: Product): Product {
   const category = (product.category || "Celular") as ProductCategory;
@@ -14,15 +14,9 @@ export async function getCompany(): Promise<Company> {
   if (!hasDatabase()) return demoCompany;
   const rows = await supabaseRequest<Company[]>(`companies?slug=eq.${companySlug}&limit=1`);
   if (rows[0]) return rows[0];
-  const created = await supabaseRequest<Company[]>("companies", {
-    method: "POST",
-    body: JSON.stringify(demoCompany),
-  });
-  await supabaseRequest<Product[]>("products", {
-    method: "POST",
-    body: JSON.stringify(demoProducts),
-  });
-  return created[0];
+  throw new Error(
+    `Empresa "${companySlug}" não encontrada no Supabase. Cadastre a empresa antes de publicar.`,
+  );
 }
 
 export async function getProducts(options: { admin?: boolean } = {}): Promise<Product[]> {
